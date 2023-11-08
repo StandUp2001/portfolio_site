@@ -6,3 +6,11 @@ body {
 	background: theme(colors.zinc.900);
 	color: white;
 }
+
+a {
+	color: theme(colors.zinc.300);
+}
+
+a:hover {
+	color: theme(colors.zinc.200);
+}
