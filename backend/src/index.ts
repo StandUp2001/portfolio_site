@@ -8,25 +8,38 @@
  * Learn more at https://developers.cloudflare.com/workers/
  */
 
+import { pathNikita } from "./Nikita";
+import { HEADERS, getBody, htmlToText } from "./utils";
+
 export interface Env {
-	// Example binding to KV. Learn more at https://developers.cloudflare.com/workers/runtime-apis/kv/
-	// MY_KV_NAMESPACE: KVNamespace;
-	//
-	// Example binding to Durable Object. Learn more at https://developers.cloudflare.com/workers/runtime-apis/durable-objects/
-	// MY_DURABLE_OBJECT: DurableObjectNamespace;
-	//
-	// Example binding to R2. Learn more at https://developers.cloudflare.com/workers/runtime-apis/r2/
-	// MY_BUCKET: R2Bucket;
-	//
-	// Example binding to a Service. Learn more at https://developers.cloudflare.com/workers/runtime-apis/service-bindings/
-	// MY_SERVICE: Fetcher;
-	//
-	// Example binding to a Queue. Learn more at https://developers.cloudflare.com/queues/javascript-apis/
-	// MY_QUEUE: Queue;
+	DB: D1Database;
 }
 
 export default {
-	async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
-		return new Response('Hello World!');
+	/**
+	 * Returns the index.html content.
+	 * @returns {Response} - The response with the index.html content.
+	 */
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const { pathname } = new URL(request.url);
+		pathname.toLowerCase();
+		const body = await getBody(request);
+
+		// PATHS:
+
+		/**
+		 * Returns the index.html content.
+		 * @returns {Response} - The response with the index.html content.
+		 */
+		if (pathname === "/") { return new Response(htmlToText("index.html"), HEADERS.HTML); }
+
+		/**
+		 * Handles the "/nikita" path.
+		 * @returns {Promise<Response>} - The response from the pathNikita function.
+		 */
+		if (pathname.startsWith("/nikita")) { return pathNikita(pathname, env.DB, body); }
+
+		// If the pathname is not found return 404
+		return new Response(`Not found: ${request.url}`, { status: 404 });
 	},
 };

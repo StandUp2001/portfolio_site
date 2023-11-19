@@ -13,7 +13,6 @@
 # Icon must end with two \r
 Icon
 
-
 # Thumbnails
 ._*
 
@@ -201,3 +200,6 @@ package
 # .pnp.*
 
 # End of https://www.toptal.com/developers/gitignore/api/macos,svelte,node,yarn,dotenv
+
+pnpm-lock.yaml
+.vscode/

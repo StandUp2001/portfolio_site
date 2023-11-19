@@ -3,9 +3,14 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "deploy": "wrangler deploy",
     "dev": "wrangler dev",
-    "start": "wrangler dev"
+    "deploy": "wrangler deploy",
+    "refresh": "npm run drop && npm run db && npm run deploy",
+    "db": "wrangler d1 execute standev2001 --file=./src/Nikita/schema.sql",
+    "drop": "wrangler d1 execute standev2001 --file=./src/Nikita/drop.sql",
+    "refreshLocal": "npm run dropLocal && npm run migrateLocal",
+    "migrateLocal": "wrangler d1 execute standev2001 --local --file=./src/Nikita/schema.sql",
+    "dropLocal": "wrangler d1 execute standev2001 --local --file=./src/Nikita/drop.sql"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20230419.0",

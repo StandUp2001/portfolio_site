@@ -1,0 +1,53 @@
+CREATE TABLE IF NOT EXISTS NUsers (id INTEGER PRIMARY KEY, name TEXT UNIQUE);
+CREATE TABLE IF NOT EXISTS NLists (id INTEGER PRIMARY KEY, name TEXT UNIQUE);
+CREATE TABLE IF NOT EXISTS NPlatforms (id INTEGER PRIMARY KEY, name TEXT NOT NULL UNIQUE);
+CREATE TABLE IF NOT EXISTS NGenres (id INTEGER PRIMARY KEY,name TEXT NOT NULL UNIQUE);
+
+INSERT OR REPLACE INTO NUsers (id, name) VALUES (1, 'Nikita');
+INSERT OR REPLACE INTO NUsers (id, name) VALUES (2, 'Tim');
+INSERT OR REPLACE INTO NUsers (id, name) VALUES (3, 'Stan');
+
+CREATE TABLE IF NOT EXISTS NGames (
+    id INTEGER PRIMARY KEY,
+    name TEXT NOT NULL,
+    slug TEXT NOT NULL UNIQUE,
+    released TEXT NOT NULL,
+    image_id TEXT
+);
+
+CREATE TABLE IF NOT EXISTS NGenresGames (
+    id INTEGER PRIMARY KEY,
+    game_id INTEGER,
+    genre_id INTEGER,
+
+    FOREIGN KEY(game_id)
+    REFERENCES NGames(id),
+    FOREIGN KEY(genre_id)
+    REFERENCES NGenres(id)
+);
+
+CREATE TABLE IF NOT EXISTS NPlatformsGames (
+    id INTEGER PRIMARY KEY,
+    game_id INTEGER,
+    platform_id INTEGER,
+
+    FOREIGN KEY(game_id)
+    REFERENCES NGames(id),
+    FOREIGN KEY(platform_id)
+    REFERENCES NPlatforms(id)
+);
+
+-- THE FOLLOWING TABLE IS THE ONE FOR STORING THE USER'S LISTS
+CREATE TABLE IF NOT EXISTS NListsGames (
+    id INTEGER PRIMARY KEY, 
+    game_id INTEGER, 
+    list_id INTEGER,
+    user_id INTEGER,
+
+    FOREIGN KEY(game_id) 
+    REFERENCES NGames(id), 
+    FOREIGN KEY(list_id) 
+    REFERENCES NLists(id),
+    FOREIGN KEY(user_id)
+    REFERENCES NUsers(id)
+);
