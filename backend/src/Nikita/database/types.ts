@@ -1,5 +1,5 @@
 export type BodyGame = {
-    id: number;
+    id?: number;
     name: string;
     slug: string;
     released: string;
@@ -9,20 +9,21 @@ export type BodyGame = {
 export type BodyIdName = { id: number; name: string; };
 
 export type BodyGameList = {
-    id: number;
+    id?: number;
     game_id: number;
     list_id: number;
     user_id: number;
 };
 
 export type BodyGameGenre = {
-    id: number;
+    id?: number;
     game_id: number;
     genre_id: number;
 };
 
 export type BodyGamePlatform = {
-    id: number;
+    id?: number;
     game_id: number;
     platform_id: number;
 };
+

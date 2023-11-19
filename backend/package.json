@@ -5,12 +5,12 @@
   "scripts": {
     "dev": "wrangler dev",
     "deploy": "wrangler deploy",
-    "refresh": "npm run drop && npm run db && npm run deploy",
+    "refresh": "npm run reset && npm run db && npm run deploy",
     "db": "wrangler d1 execute standev2001 --file=./src/Nikita/schema.sql",
-    "drop": "wrangler d1 execute standev2001 --file=./src/Nikita/drop.sql",
-    "refreshLocal": "npm run dropLocal && npm run migrateLocal",
+    "reset": "wrangler d1 execute standev2001 --file=./src/Nikita/reset_tables.sql",
+    "refreshLocal": "npm run resetLocal && npm run migrateLocal",
     "migrateLocal": "wrangler d1 execute standev2001 --local --file=./src/Nikita/schema.sql",
-    "dropLocal": "wrangler d1 execute standev2001 --local --file=./src/Nikita/drop.sql"
+    "resetLocal": "wrangler d1 execute standev2001 --local --file=./src/Nikita/reset_tables.sql"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20230419.0",

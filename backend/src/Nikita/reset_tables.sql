@@ -1,0 +1,17 @@
+DELETE FROM NListsGames;
+DELETE FROM NGenresGames;
+DELETE FROM NPlatformsGames;
+DELETE FROM NUsers;
+DELETE FROM NGames;
+DELETE FROM NLists;
+DELETE FROM NPlatforms;
+DELETE FROM NGenres;
+
+DROP TABLE NListsGames;
+DROP TABLE NGenresGames;
+DROP TABLE NPlatformsGames;
+DROP TABLE NUsers;
+DROP TABLE NGames;
+DROP TABLE NLists;
+DROP TABLE NPlatforms;
+DROP TABLE NGenres;

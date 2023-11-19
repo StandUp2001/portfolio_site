@@ -1,5 +1,3 @@
-import { HEADERS } from "../../utils";
-
 /**
  * Retrieves the link from the given path if it has an ID and NAME.
  * @param {string} path - The path to search for the link.
@@ -100,3 +98,4 @@ export async function getBodyFromTable(table: string, DB: D1Database): Promise<R
     }
     return body;
 }
+

@@ -11,10 +11,10 @@ import { DB_NIKITA_TABLES, hasIdName, showRoutes } from "./database/utils";
  * @returns {Promise<Response>} - The response based on the pathname.
  */
 export async function pathNikita(pathname: string, DB: D1Database, body: any): Promise<Response> {
-
-    // If the pathname is /nikita, return "Nikita"
+    // If the pathname is /nikita, return Message
     const restPathname = pathname.substring(7);
-    if (restPathname === "/" || restPathname === "") { return new Response("Nikita's backend app", HEADERS.TEXT); }
+    const message = `Nikita's backend app look at /routes for all routes and body structure`;
+    if (restPathname === "/" || restPathname === "") { return new Response(message, HEADERS.TEXT); }
 
     // If the pathname is /nikita/routes, return the routes
     if (restPathname === "/routes") { return await showRoutes(DB); }
