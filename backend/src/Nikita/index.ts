@@ -1,8 +1,7 @@
-import { Env } from "..";
 import { HEADERS } from "../utils";
 import { BodyGame, BodyGameGenre, BodyGameList, BodyGamePlatform, BodyIdName } from "./database/types";
 import { pathApi } from "./database/paths";
-import { DB_TABLES, getKeyFromTable, hasIdName } from "./database/utils";
+import { DB_NIKITA_TABLES, hasIdName, showRoutes } from "./database/utils";
 
 /**
  * Handles the routing logic for the "/nikita" path.
@@ -17,25 +16,28 @@ export async function pathNikita(pathname: string, DB: D1Database, body: any): P
     const restPathname = pathname.substring(7);
     if (restPathname === "/" || restPathname === "") { return new Response("Nikita's backend app", HEADERS.TEXT); }
 
+    // If the pathname is /nikita/routes, return the routes
+    if (restPathname === "/routes") { return await showRoutes(DB); }
+
     // If the pathname has only ID and NAME, use the ID and NAME body to get the data
     const idNameLink = await hasIdName(restPathname, DB);
     if (idNameLink) { return await pathApi<BodyIdName>(DB, idNameLink, restPathname, body); }
 
     // If the pathname starts with /games, use the game body to get the data
     const gameLink = restPathname.startsWith("/games");
-    if (gameLink) { return await pathApi<BodyGame>(DB, DB_TABLES.games, restPathname, body); }
+    if (gameLink) { return await pathApi<BodyGame>(DB, DB_NIKITA_TABLES.games, restPathname, body); }
 
-    // If the pathname starts with /game-lists, use the game list body to get the data
-    const gameListLink = restPathname.startsWith("/game-lists");
-    if (gameListLink) { return await pathApi<BodyGameList>(DB, DB_TABLES.listGames, restPathname, body); }
+    // If the pathname starts with /list-games, use the game list body to get the data
+    const gameListLink = restPathname.startsWith("/list-games");
+    if (gameListLink) { return await pathApi<BodyGameList>(DB, DB_NIKITA_TABLES.listGames, restPathname, body); }
 
-    // If the pathname starts with /game-genres, use the game genre body to get the data
-    const gameGenreLink = restPathname.startsWith("/game-genres");
-    if (gameGenreLink) { return await pathApi<BodyGameGenre>(DB, DB_TABLES.genreGames, restPathname, body); }
+    // If the pathname starts with /genre-games, use the game genre body to get the data
+    const gameGenreLink = restPathname.startsWith("/genre-games");
+    if (gameGenreLink) { return await pathApi<BodyGameGenre>(DB, DB_NIKITA_TABLES.genreGames, restPathname, body); }
 
-    // If the pathname starts with /game-platforms, use the game platform body to get the data
-    const gamePlatformLink = restPathname.startsWith("/game-platforms");
-    if (gamePlatformLink) { return await pathApi<BodyGamePlatform>(DB, DB_TABLES.platformGames, restPathname, body); }
+    // If the pathname starts with /platform-games, use the game platform body to get the data
+    const gamePlatformLink = restPathname.startsWith("/platform-games");
+    if (gamePlatformLink) { return await pathApi<BodyGamePlatform>(DB, DB_NIKITA_TABLES.platformGames, restPathname, body); }
 
     // If the pathname is /nikita/... but not a valid path, return 404
     return new Response(`Not found: ${restPathname}`, { status: 404 });
